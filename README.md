@@ -1,6 +1,6 @@
 # React + Express - skeleton
-
 Skeleton Arevyhs
+
 ## React
  - LocalStorage - loginData{loginID, loginName, loginEmail, loginToken}
  - GlobalContext - loginOK, z LocalStorage - loginData{loginID, loginName, loginEmail, loginToken}
@@ -15,13 +15,13 @@ Skeleton Arevyhs
  - nodemon
  - server beží na - process.env.PORT || 5000;
 
- ### Spuštení
- 1. React
+ ## Spuštení
+ ### 1. React
  - termánál PowerShell - cd ./client
  - npm install
  - npm start
 
- 2. Express
+ ### 2. Express
  - terminál Commend Prompt - cd ./server
  - npm install
  - npm start
