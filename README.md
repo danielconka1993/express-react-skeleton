@@ -9,7 +9,7 @@ Skeleton Arevyhs
 
 ## Express
  - DB - MongoDB
- - .gitignore neobsahuje .env
+ - .env - má být ve složce server (PORT, DB_CONNECT, JWT_SECRET)
  - express má zabezpečení tokenem při loginu (login vyloučen) - express-jwt
  - login, registrace obsahují Hash - crypto
  - nodemon

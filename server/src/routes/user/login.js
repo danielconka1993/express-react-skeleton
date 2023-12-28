@@ -1,28 +1,42 @@
-const loginData = require("express").Router();
-const UserModel = require("../../models/user");
+const express = require('express');
+const jwtMiddleware = require("../../middleware/jwtMiddleware")
+const router = express.Router();
+const User = require('../../models/user');
 
-loginData.post("/login", async (req, res) => {
-  try {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    // Hledání uživatele dle e-mailu a hesla
-    const user = await UserModel.findOne({ email, password });
+    try {
+        const user = await User.findOne({ email });
 
-    if (user) {
-      // Vrátíme úspěšnou odpověď
-      res.status(200).json({ 
-        msg: "Přihlášení úspěšné", 
-        user: [user], 
-        success: true
-      });
-    } else {
-      // Pokud uživatel neexistuje, vrátíme chybovou odpověď
-      res.status(401).json({ msg: "Přihlašovací údaje zadány špatně" });
+        if (!user) {
+            // console.error("Neni uzivatel")
+            return res.status(400).send({
+                msg: "Uživatel nenalezen."
+            });
+        }
+
+        if (user.validPassword(password)) {
+            // Vytvoření JWT tokenu
+            const token = jwtMiddleware.signToken(user._id);
+
+            return res.status(201).send({
+                msg: "Přihlášeno",
+                user: [user],
+                success: true,
+                token: token // Poslání vytvořeného tokenu zpět klientovi 
+            });
+        } else {
+            return res.status(400).send({
+                msg: "Špatné heslo"
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({
+            msg: `Chyba: ${err}. Kontaktuje Náš. `
+        });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: "Chyba serveru" });
-  }
 });
 
-module.exports = loginData;
+module.exports = router;
