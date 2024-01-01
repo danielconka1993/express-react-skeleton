@@ -1,7 +1,10 @@
 const express = require("express")
 const app = express()
+const dotenv = require('dotenv');
 const PORT = process.env.PORT || 5000; // server 
 const cors = require("cors") // For frontend connection
+
+dotenv.config();
 
 const db = require("./connectDB")
 
@@ -9,9 +12,10 @@ const db = require("./connectDB")
 const jwtMiddleware = require('./middleware/jwtMiddleware'); 
 
 app.use(express.json({extended:false})); // 2,5 Midleware for easy Routes
-app.use(jwtMiddleware.verifyToken.unless({ path: ['/login',`/registration`] })); // musí byt zde, nad ostatními app.
+app.use(jwtMiddleware.verifyToken.unless({ path: ['/','/login',`/registration`] })); // musí byt zde, nad ostatními app.
 
-app.use("/",cors());
+// app.use("/",cors());
+app.use(cors());
 // ---------------------------------
 
 // Routy - načtení
