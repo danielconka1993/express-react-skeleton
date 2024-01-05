@@ -31,6 +31,7 @@ const postComment = require("./routes/comments/postComment")
 const getComment = require("./routes/comments/getComments.js")
 const putComment = require("./routes/comments/putComment.js")
 const deleteComment = require("./routes/comments/deleteComment.js")
+// const deleteAllPostComments = require("./routes/comments/deleteAllPostComments.js")
 
 
 // Index
@@ -57,4 +58,5 @@ app.use("/", postComment)
 app.use("/", getComment)
 app.use("/", putComment)
 app.use("/", deleteComment)
+// app.use("/", deleteAllPostComments)
 
