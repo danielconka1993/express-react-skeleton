@@ -41,7 +41,7 @@ router.get("/get-comment", async (req, res) => {
 
     if (!postID) {
       return res.status(400).json({
-        msg: "Chybějící postId ve vyžádání.",
+        msg: "ERROR - Chybějící postID.",
         comments: [],
       });
     }
@@ -63,7 +63,7 @@ router.get("/get-comment", async (req, res) => {
       comments: commentsWithAuthorInfo,
     });
   } catch (err) {
-    return res.json({
+    return res.status(500).json({
       msg: `Chyba: ${err}. Kontaktujte Nás.`,
       comments: [],
     });

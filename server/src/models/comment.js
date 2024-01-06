@@ -21,7 +21,7 @@ const commentModel = new mongoose.Schema({
     type: String,
     require: true,
   },
-  dateUpdate:{
+  dateUpdate: {
     type: String,
     require: true,
   },

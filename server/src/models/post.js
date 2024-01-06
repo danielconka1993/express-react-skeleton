@@ -14,15 +14,14 @@ const postModel = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date:{
+  date: {
     type: String,
     require: true,
   },
-  dateUpdate:{
+  dateUpdate: {
     type: String,
     require: true,
   },
 });
 
-// "posts" určuje jméno kolekce
 module.exports = mongoose.model("posts", postModel);
