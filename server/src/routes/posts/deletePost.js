@@ -66,30 +66,28 @@ route.delete("/delete-post", async (req, res) => {
     try {
         const { _id, autorID } = req.body;
 
-        // Najde příspěvek
-        const post = await modelPost.findOne({ _id, autorID });
+        const post = await modelPost.findOne({ _id, autorID }); // Find Post
 
         if (post) {
-            // Najde komentáře ke konkrétnímu příspěvku
+            // Find posts's Comments if exists and delete then
             const comments = await modelComment.find({ postID: _id });
 
             if (comments && comments.length > 0) {
-                // Smazání všech komentářů ke konkrétnímu příspěvku
                 await modelComment.deleteMany({ postID: _id });
             }
 
-            // Smazání příspěvku
+            // Post delete
             await modelPost.deleteOne({ _id, autorID });
 
             res.status(200).json({
                 success: true,
-                msg: "Příspěvek a jeho komentáře byly odstraněny",
+                msg: comments.length > 0 ? "Příspěvek a jeho komentáře byly odstraněny" : "Příspevek odstraněn" ,
             });
         } else {
             res.status(400).json({ msg: "Nejste autorem příspěvku. Příspěvek nebude odstraněn." });
         }
     } catch (err) {
-        res.status(500).send({ msg: `Chyba: ${err}` });
+        res.status(500).send({ msg: `Chyba: ${err}. Kontaktujte Nás`});
     }
 });
 

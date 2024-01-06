@@ -29,12 +29,15 @@ router.get("/get-posts", async (req, res) => {
 
     const postsWithAuthorInfo = await Promise.all(
       posts.map(async (post) => {
-        const author = await modelUser.findById(post.autorID).lean(); // Přidává k postu Jméno autora
-        const comments = await modelComment.find({postID: post._id}).lean(); // Přidáva počet komentáču k příspevku
+        const author = await modelUser.findById(post.autorID).lean(); // Add to post autorName from collection User to the post object
+        const comments = await modelComment.find({postID: post._id}).lean(); // Add number of post comments to the post object
+        
         return {
           ...post,
-          autorName: author ? author.name : null,
-          numberComments: comments ? comments.length : 0,
+          // autorName: author ? author.name : null,
+          // numberComments: comments ? comments.length : 0,¨
+          autorName: author?.name || null,
+          numberComments: comments?.length || 0,
         };
       })
     );
