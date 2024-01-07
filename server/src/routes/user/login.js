@@ -10,9 +10,8 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      // console.error("Neni uzivatel")
       return res.status(400).send({
-        msg: "Uživatel nenalezen.",
+        msg: "E-mail není registrovaný",
       });
     }
 
@@ -23,7 +22,6 @@ router.post("/login", async (req, res) => {
       return res.send({
         msg: "Přihlášeno",
         user: [user],
-        success: true,
         token: token, // Sending the generated token back to the client
       });
     } else {
@@ -34,7 +32,7 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).send({
-      msg: `Chyba: ${err}. Kontaktuje Náš. `,
+      msg: `Chyba: ${err.message}. Kontaktujte Nás`,
     });
   }
 });

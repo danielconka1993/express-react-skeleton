@@ -12,7 +12,6 @@ router.post("/registration", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         msg: "Email je již registrovaný",
-        success: false,
       });
     }
 
@@ -24,16 +23,14 @@ router.post("/registration", async (req, res) => {
     // Create HASH + Salt
     registration.setPassword(password);
 
-    const document = await registration.save();
+    const data = await registration.save();
 
-    res.json({
-      msg: `Registration complete ${JSON.stringify(document)}`,
-      success: true,
+    return res.json({
+      msg: `Registrace dokončena: ${data.name}`,
     });
   } catch (err) {
-    res.status(500).json({
-      msg: "Registration failed",
-      success: false,
+    return res.status(500).json({
+      msg: `Chyba: ${err.message}. Kontaktujte Nás`,
     });
   }
 });

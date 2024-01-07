@@ -11,18 +11,15 @@ route.delete("/delete-comment", async (req, res) => {
 
       return res.status(200).json({
         msg: "Komentář Odstraněn",
-        success: true,
       });
     } else {
       return res.status(400).json({
         msg: "Nejste Autorem Komentáře. Komentář Nesmazán",
-        succes: false,
       });
     }
   } catch (err) {
     return res.status(500).send({
       msg: `Chyba: ${err}`,
-      success: false,
     });
   }
 });

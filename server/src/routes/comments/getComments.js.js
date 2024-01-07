@@ -1,35 +1,3 @@
-// const express = require("express");
-// const router = express.Router();
-// const modelComment = require("../../models/comment");
-
-// router.get("/get-comment", (req, res) => {
-//   const postID = req.query.postID;
-
-//   if (!postID) {
-//     return res.status(400).json({
-//       msg: "Chybějící postId ve vyžádání.",
-//       comments: [],
-//     });
-//   }
-
-//   modelComment
-//     .find({ postID: postID })
-//     .then((docs) => {
-//       return res.json({
-//         msg: `Komentáře načteny Getem pro postID: ${postID}`,
-//         comments: docs,
-//       });
-//     })
-//     .catch((err) => {
-//       return res.json({
-//         msg: "Chyba " + err,
-//         comments: [],
-//       });
-//     });
-// });
-
-// module.exports = router;
-
 const express = require("express");
 const router = express.Router();
 const modelComment = require("../../models/comment");
@@ -48,7 +16,7 @@ router.get("/get-comment", async (req, res) => {
 
     const comments = await modelComment.find({ postID }).lean();
 
-    const commentsWithAuthorInfo = await Promise.all(
+    const commentsWithAuthorData = await Promise.all(
       comments.map(async (comment) => {
         const author = await modelUser.findById(comment.autorID).lean();
         return {
@@ -60,7 +28,7 @@ router.get("/get-comment", async (req, res) => {
 
     return res.json({
       msg: `Komentáře načteny Getem pro postID: ${postID}`,
-      comments: commentsWithAuthorInfo,
+      comments: commentsWithAuthorData,
     });
   } catch (err) {
     return res.status(500).json({

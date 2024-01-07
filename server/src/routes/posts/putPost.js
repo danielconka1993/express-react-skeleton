@@ -19,18 +19,15 @@ route.put("/put-post", async (req, res) => {
 
       return res.json({
         msg: "Příspěvek aktualizován",
-        success: true,
       });
     } else {
       return res.status(400).json({
         msg: "Příspěvek neexistuje",
-        success: false,
       });
     }
   } catch (err) {
     return res.status(500).json({
-      msg: `Chyba: ${err}`,
-      success: false,
+      msg: `Chyba: ${err.message}. Kontaktujte Nás`,
     });
   }
 });

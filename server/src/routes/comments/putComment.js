@@ -19,18 +19,15 @@ route.put("/put-comment", async (req, res) => {
 
       return res.json({
         msg: "Komentář aktualizován",
-        success: true,
       });
     } else {
       return res.status(400).json({
         msg: "Komentář neexistuje",
-        success: false,
       });
     }
   } catch (err) {
     return res.status(500).json({
       msg: `Chyba: ${err}`,
-      success: false,
     });
   }
 });

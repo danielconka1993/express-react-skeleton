@@ -1,23 +1,3 @@
-// const router = require("express").Router();
-// const modelPost = require("../../models/post");
-
-// router.get("/get-posts", async (req, res) => {
-//     try {
-//         // const posts = await modelPost.find({});
-//         const posts = await modelPost.find({})
-//         return res.json({
-//           msg: "Članky načteny Getem",
-//           posts: posts,
-//         });
-//       } catch (err) {
-//         return res.json({
-//           msg: `Chyba: ${err}. Kontaktuje Náš. `,
-//           posts: [],
-//         });
-//       }
-//     });
-
-// module.exports = router;
 const router = require("express").Router();
 const modelPost = require("../../models/post");
 const modelUser = require("../../models/user");
@@ -34,8 +14,6 @@ router.get("/get-posts", async (req, res) => {
 
         return {
           ...post,
-          // autorName: author ? author.name : null,
-          // numberComments: comments ? comments.length : 0,¨
           autorName: author?.name || null,
           numberComments: comments?.length || 0,
         };
@@ -48,7 +26,7 @@ router.get("/get-posts", async (req, res) => {
     });
   } catch (err) {
     return res.json({
-      msg: `Chyba: ${err}. Kontaktujte Nás.`,
+      msg: `Chyba Serveru: ${err.message}. Kontaktujte Nás.`,
       posts: [],
     });
   }
